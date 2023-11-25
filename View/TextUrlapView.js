@@ -1,10 +1,25 @@
 export default class TextUrlapView{
+    #value="";
+    #valid=false;
     constructor(szuloElem,obj,key) {
         this.szuloElem=szuloElem;
         this.obj=obj;
         this.key=key;
         this.textUrlapElem();
         this.inputElem=$(`#${this.key}`);
+        this.inputElem.on("keyup",()=>{
+            console.log(this.inputElem.val());
+            this.#value=this.inputElem.val();
+            //valid-e?
+            let patternString=this.obj.pattern; //reguláris kifejezés=előre meghatározott mintázat
+            let pattern = new RegExp(patternString); //szöveget átalalakítjuk reguláris objektummá
+            if (pattern.test(this.#value)) {
+                this.#valid=true;
+            } else {
+                this.#valid=false;
+            };
+            console.log(this.#valid);
+        })
     }
 
     getValue(){
